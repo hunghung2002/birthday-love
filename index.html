@@ -112,6 +112,41 @@ body{
   100%{height:10%;}
 }
 
+.start-screen{
+  position:fixed;
+  inset:0;
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:1000;
+  flex-direction:column;
+  color:white;
+}
+
+.start-screen.hide{
+  opacity:0;
+  pointer-events:none;
+  transition:0.5s ease;
+}
+
+.start-button{
+  font-family:'Dancing Script',cursive;
+  font-size:60px;
+  color:#ff4da6;
+  border:3px solid #ff4da6;
+  padding:24px 40px;
+  border-radius:999px;
+  cursor:pointer;
+  text-shadow:0 0 20px #ff4da6;
+  animation:pulse 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulse{
+  from{transform:scale(1);}
+  to{transform:scale(1.05);}
+}
+
 /* ===== SLIDES ===== */
 .slide{
   position:absolute;
@@ -432,6 +467,10 @@ body{
 
 <div class="bg"></div>
 
+<div class="start-screen" id="startScreen">
+  <div class="start-button" id="startButton">Start ❤️</div>
+</div>
+
 <!-- ===== CINEMATIC INTRO ===== -->
 <div class="cinematic" id="cinematic">
   <div class="cinematic-bars"></div>
@@ -502,113 +541,34 @@ body{
 </div>
 
 <!-- MUSIC -->
-<audio id="music" autoplay loop>
+<audio id="music" loop preload="auto">
   <source src="music.mp3">
 </audio>
 
 <script>
-const music = document.getElementById("music");
-const startScreen = document.getElementById("startScreen");
-
-let started = false;
-let currentScene = -1;
-
-const slides = document.querySelectorAll(".slide");
-const finalScreen = document.getElementById("final");
-const cinematic = document.getElementById("cinematic");
-
-/* 🎬 TIMELINE MV (SYNC THEO NHẠC) */
-const timeline = [
-
-  { time: 0,   action: "intro" },
-
-  { time: 5,   action: "scene", index: 0 },
-  { time: 10,  action: "scene", index: 1 },
-  { time: 15,  action: "scene", index: 2 },
-  { time: 20,  action: "scene", index: 3 },
-  { time: 25,  action: "scene", index: 4 },
-  { time: 30,  action: "scene", index: 5 },
-  { time: 35,  action: "scene", index: 6 },
-
-  { time: 40,  action: "final" }
-];
-
-/* 🎯 START EXPERIENCE */
-function startExperience(){
-
-  if(started) return;
-  started = true;
-
-  music.play().catch(()=>{});
-
-  startScreen.style.opacity = "0";
-  setTimeout(()=>startScreen.remove(),800);
-
-  startMV();
-}
-
-document.addEventListener("click", startExperience);
-document.addEventListener("touchstart", startExperience);
-
-/* 🎬 START MV ENGINE */
-function startMV(){
-
-  requestAnimationFrame(syncLoop);
-
-}
-
-/* 🔥 SYNC ENGINE */
-function syncLoop(){
-
-  const t = music.currentTime;
-
-  for(let i = timeline.length - 1; i >= 0; i--){
-
-    if(t >= timeline[i].time){
-
-      if(currentScene !== i){
-        currentScene = i;
-        runAction(timeline[i]);
-      }
-
-      break;
-    }
-  }
-
-  requestAnimationFrame(syncLoop);
-}
-
-/* 🎭 ACTION HANDLER */
-function runAction(item){
-
-  if(item.action === "intro"){
-    cinematic.classList.add("hide");
-  }
-
-  if(item.action === "scene"){
-
-    slides.forEach(s => s.classList.remove("active"));
-
-    if(slides[item.index]){
-      slides[item.index].classList.add("active");
-    }
-  }
-
-  if(item.action === "final"){
-
-    slides.forEach(s => s.classList.remove("active"));
-    finalScreen.classList.add("show");
-  }
-}
-/* CINEMATIC INTRO */
-setTimeout(()=>{
-  document.getElementById("cinematic").classList.add("hide");
-  slides[0].classList.add("active");
-  setTimeout(nextSlide, 4000);
-}, 4500);
 
 let slides = document.querySelectorAll(".slide");
 let index = 0;
+let experienceStarted = false;
+const music = document.getElementById("music");
+const startScreen = document.getElementById("startScreen");
+const cinematic = document.getElementById("cinematic");
+const startButton = document.getElementById("startButton");
+
+function startExperience(){
+  if(experienceStarted) return;
+  experienceStarted = true;
+  startScreen.classList.add("hide");
+  music.play().catch(()=>{});
+  setTimeout(()=>{
+    cinematic.classList.add("hide");
+    slides[0].classList.add("active");
+    setTimeout(nextSlide, 4000);
+  }, 4500);
+}
+
+startButton.addEventListener("click", startExperience);
+startScreen.addEventListener("click", startExperience);
 
 function nextSlide(){
 
@@ -630,7 +590,7 @@ function nextSlide(){
   setTimeout(nextSlide, 4000);
 }
 
-// Cinematic intro chỉ chạy 1 lần, sau đó slideshow tự động bắt đầu
+// Cinematic intro chỉ chạy sau khi nhấn Start
 
 /* HEART EFFECT */
 setInterval(()=>{
