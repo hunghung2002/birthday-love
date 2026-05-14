@@ -59,23 +59,24 @@ body{
   text-align:center;
   text-shadow:0 0 30px #ff4da6;
   margin-bottom:30px;
+  padding:0 20px;
 }
 
 .cinematic-line1{
-  font-size:60px;
+  font-size:clamp(28px, 8vw, 60px);
   animation:slideInTop 2s ease forwards;
   opacity:0;
 }
 
 .cinematic-line2{
-  font-size:48px;
+  font-size:clamp(24px, 6vw, 48px);
   animation:slideInTop 2s ease 0.8s forwards;
   opacity:0;
   margin-top:20px;
 }
 
 .cinematic-line3{
-  font-size:56px;
+  font-size:clamp(28px, 7vw, 56px);
   animation:slideInTop 2s ease 1.6s forwards;
   opacity:0;
   margin-top:20px;
@@ -132,10 +133,10 @@ body{
 
 .start-button{
   font-family:'Dancing Script',cursive;
-  font-size:60px;
+  font-size:clamp(36px, 10vw, 60px);
   color:#ff4da6;
   border:3px solid #ff4da6;
-  padding:24px 40px;
+  padding:clamp(16px, 4vw, 24px) clamp(24px, 6vw, 40px);
   border-radius:999px;
   cursor:pointer;
   text-shadow:0 0 20px #ff4da6;
@@ -159,6 +160,7 @@ body{
   opacity:0;
   transform:scale(1.2);
   transition:2s ease;
+  overflow:hidden;
 }
 
 .slide.active{
@@ -169,16 +171,17 @@ body{
 /* IMAGE STYLE (KEN BURNS) */
 .slide img{
   position:absolute;
-  width:110%;
-  height:110%;
+  width:100%;
+  height:100%;
   object-fit:cover;
+  object-position:center;
   animation:zoom 6s linear infinite;
-  filter:brightness(0.8) contrast(1.1);
+  filter:brightness(0.7) contrast(1.1);
 }
 
 @keyframes zoom{
   from{transform:scale(1);}
-  to{transform:scale(1.15);}
+  to{transform:scale(1.08);}
 }
 
 /* TEXT OVERLAY */
@@ -189,22 +192,31 @@ body{
   color:white;
   font-family:'Dancing Script',cursive;
   text-shadow:0 0 20px #ff4da6;
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:clamp(20px, 5vw, 60px);
 }
 
 .title{
-  font-size:80px;
+  font-size:clamp(24px, 6vw, 80px);
   animation:fadeUp 2s ease;
   line-height:1.4;
   word-wrap:break-word;
+  max-width:90vw;
+  letter-spacing:0.5px;
 }
 
 .subtitle{
-  font-size:30px;
-  margin-top:20px;
+  font-size:clamp(16px, 3.5vw, 30px);
+  margin-top:clamp(10px, 2vw, 20px);
   opacity:0.9;
   animation:fadeUp 3s ease;
   line-height:1.4;
   word-wrap:break-word;
+  max-width:90vw;
 }
 
 @keyframes fadeUp{
@@ -216,195 +228,141 @@ body{
 
 /* Mobile nhỏ (320px - 480px) */
 @media screen and (max-width:480px){
-  .slide img{
-    width:100%;
-    height:100%;
-  }
-  
   .text{
-    padding:0 15px;
-    max-width:90vw;
+    padding:clamp(15px, 3vw, 20px);
   }
   
   .title{
-    font-size:28px;
-    line-height:1.3;
+    font-size:clamp(20px, 5vw, 28px);
   }
   
   .subtitle{
-    font-size:14px;
-    margin-top:10px;
+    font-size:clamp(12px, 3vw, 14px);
   }
   
   .final h1{
-    font-size:32px;
-    line-height:1.3;
-    padding:0 15px;
+    font-size:clamp(24px, 5vw, 32px);
+    padding:clamp(10px, 3vw, 15px);
   }
   
   .heart{
-    font-size:16px;
+    font-size:clamp(14px, 3vw, 16px);
   }
 }
 
 /* Mobile trung bình (481px - 768px) */
 @media screen and (min-width:481px) and (max-width:768px){
-  .slide img{
-    width:100%;
-    height:100%;
-  }
-  
   .text{
-    padding:0 20px;
-    max-width:90vw;
+    padding:clamp(20px, 4vw, 25px);
   }
   
   .title{
-    font-size:38px;
-    line-height:1.4;
+    font-size:clamp(28px, 5.5vw, 38px);
   }
   
   .subtitle{
-    font-size:18px;
-    margin-top:15px;
+    font-size:clamp(14px, 3.5vw, 18px);
   }
   
   .final h1{
-    font-size:42px;
-    line-height:1.4;
-    padding:0 20px;
+    font-size:clamp(32px, 6vw, 42px);
+    padding:clamp(15px, 4vw, 20px);
   }
   
   .heart{
-    font-size:18px;
+    font-size:clamp(16px, 3.5vw, 18px);
   }
 }
 
 /* Tablet nhỏ (769px - 900px) */
 @media screen and (min-width:769px) and (max-width:900px){
-  .slide img{
-    width:105%;
-    height:105%;
-  }
-  
   .text{
-    padding:0 35px;
-    max-width:85vw;
+    padding:clamp(25px, 4.5vw, 35px);
   }
   
   .title{
-    font-size:52px;
-    line-height:1.4;
+    font-size:clamp(40px, 5.8vw, 52px);
   }
   
   .subtitle{
-    font-size:22px;
-    margin-top:18px;
+    font-size:clamp(18px, 4vw, 22px);
   }
   
   .final h1{
-    font-size:52px;
-    line-height:1.4;
-    padding:0 35px;
+    font-size:clamp(40px, 6.5vw, 52px);
+    padding:clamp(20px, 4.5vw, 35px);
   }
   
   .heart{
-    font-size:19px;
+    font-size:clamp(18px, 4vw, 19px);
   }
 }
 
 /* Tablet lớn/iPad (901px - 1024px) */
 @media screen and (min-width:901px) and (max-width:1024px){
-  .slide img{
-    width:108%;
-    height:108%;
-  }
-  
   .text{
-    padding:0 40px;
-    max-width:85vw;
+    padding:clamp(30px, 5vw, 40px);
   }
   
   .title{
-    font-size:62px;
-    line-height:1.4;
+    font-size:clamp(48px, 6vw, 62px);
   }
   
   .subtitle{
-    font-size:26px;
-    margin-top:20px;
+    font-size:clamp(20px, 4.2vw, 26px);
   }
   
   .final h1{
-    font-size:58px;
-    line-height:1.4;
-    padding:0 40px;
+    font-size:clamp(48px, 6.8vw, 58px);
+    padding:clamp(25px, 5vw, 40px);
   }
   
   .heart{
-    font-size:20px;
+    font-size:clamp(19px, 4.2vw, 20px);
   }
 }
 
 /* Desktop nhỏ (1025px - 1440px) */
 @media screen and (min-width:1025px) and (max-width:1440px){
-  .slide img{
-    width:110%;
-    height:110%;
-  }
-  
   .text{
-    padding:0 50px;
-    max-width:80vw;
+    padding:clamp(40px, 5.5vw, 50px);
   }
   
   .title{
-    font-size:72px;
-    line-height:1.4;
+    font-size:clamp(56px, 6.2vw, 72px);
   }
   
   .subtitle{
-    font-size:28px;
-    margin-top:22px;
+    font-size:clamp(22px, 4.5vw, 28px);
   }
   
   .final h1{
-    font-size:66px;
-    line-height:1.4;
-    padding:0 50px;
+    font-size:clamp(56px, 7vw, 66px);
+    padding:clamp(35px, 5.5vw, 50px);
   }
   
   .heart{
-    font-size:21px;
+    font-size:clamp(20px, 4.5vw, 21px);
   }
 }
 
 /* Desktop lớn (1441px+) */
 @media screen and (min-width:1441px){
-  .slide img{
-    width:110%;
-    height:110%;
-  }
-  
   .text{
-    padding:0 60px;
-    max-width:75vw;
+    padding:60px;
   }
   
   .title{
     font-size:80px;
-    line-height:1.4;
   }
   
   .subtitle{
     font-size:30px;
-    margin-top:25px;
   }
   
   .final h1{
     font-size:70px;
-    line-height:1.4;
-    padding:0 60px;
+    padding:60px;
   }
   
   .heart{
@@ -437,6 +395,7 @@ body{
   opacity:0;
   background:black;
   transition:3s;
+  padding:clamp(20px, 5vw, 60px);
 }
 
 .final.show{
@@ -445,14 +404,15 @@ body{
 
 .final h1{
   color:white;
-  font-size:70px;
+  font-size:clamp(40px, 8vw, 70px);
   font-family:'Dancing Script';
   text-shadow:0 0 40px #ff4da6;
   animation:glow 2s infinite alternate;
   line-height:1.4;
   word-wrap:break-word;
-  padding:0 40px;
   max-width:90vw;
+  text-align:center;
+  letter-spacing:0.5px;
 }
 
 @keyframes glow{
