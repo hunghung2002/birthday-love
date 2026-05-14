@@ -507,7 +507,99 @@ body{
 </audio>
 
 <script>
+const music = document.getElementById("music");
+const startScreen = document.getElementById("startScreen");
 
+let started = false;
+let currentScene = -1;
+
+const slides = document.querySelectorAll(".slide");
+const finalScreen = document.getElementById("final");
+const cinematic = document.getElementById("cinematic");
+
+/* 🎬 TIMELINE MV (SYNC THEO NHẠC) */
+const timeline = [
+
+  { time: 0,   action: "intro" },
+
+  { time: 5,   action: "scene", index: 0 },
+  { time: 10,  action: "scene", index: 1 },
+  { time: 15,  action: "scene", index: 2 },
+  { time: 20,  action: "scene", index: 3 },
+  { time: 25,  action: "scene", index: 4 },
+  { time: 30,  action: "scene", index: 5 },
+  { time: 35,  action: "scene", index: 6 },
+
+  { time: 40,  action: "final" }
+];
+
+/* 🎯 START EXPERIENCE */
+function startExperience(){
+
+  if(started) return;
+  started = true;
+
+  music.play().catch(()=>{});
+
+  startScreen.style.opacity = "0";
+  setTimeout(()=>startScreen.remove(),800);
+
+  startMV();
+}
+
+document.addEventListener("click", startExperience);
+document.addEventListener("touchstart", startExperience);
+
+/* 🎬 START MV ENGINE */
+function startMV(){
+
+  requestAnimationFrame(syncLoop);
+
+}
+
+/* 🔥 SYNC ENGINE */
+function syncLoop(){
+
+  const t = music.currentTime;
+
+  for(let i = timeline.length - 1; i >= 0; i--){
+
+    if(t >= timeline[i].time){
+
+      if(currentScene !== i){
+        currentScene = i;
+        runAction(timeline[i]);
+      }
+
+      break;
+    }
+  }
+
+  requestAnimationFrame(syncLoop);
+}
+
+/* 🎭 ACTION HANDLER */
+function runAction(item){
+
+  if(item.action === "intro"){
+    cinematic.classList.add("hide");
+  }
+
+  if(item.action === "scene"){
+
+    slides.forEach(s => s.classList.remove("active"));
+
+    if(slides[item.index]){
+      slides[item.index].classList.add("active");
+    }
+  }
+
+  if(item.action === "final"){
+
+    slides.forEach(s => s.classList.remove("active"));
+    finalScreen.classList.add("show");
+  }
+}
 /* CINEMATIC INTRO */
 setTimeout(()=>{
   document.getElementById("cinematic").classList.add("hide");
